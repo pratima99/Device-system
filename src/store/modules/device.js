@@ -7,12 +7,14 @@ export const SET_THEME_COLOR = 'SET_THEME_COLOR'
 export const SET_STATUS_MESSAGE = 'SET_STATUS_MESSAGE'
 export const DELETE_DEVICE = 'DELETE_DEVICE'
 export const SET_LOCAL_DEVICES = 'SET_LOCAL_DEVICES'
+export const SET_LOCALE = 'SET_LOCALE'
 const state = {
     devices: [],
     selectedDevice: {},
     themeColor: 'theme-light',
     statusMessage: '',
     localDevices: [],
+    locale: ''
 }
 
 const mutations = {
@@ -34,7 +36,11 @@ const mutations = {
     },
     [DELETE_DEVICE](state, value) {
         state.devices = state.devices?.filter(el => el.id !== value)
-    }
+    },
+    [SET_LOCALE](state, value) {
+        localStorage.setItem("lang", value);
+        state.locale = value
+    },
 }
 
 const actions = {
@@ -80,7 +86,8 @@ const getters = {
     localDevices: state => state.localDevices,
     selectedDevice: state => state.selectedDevice,
     themeColor: state => state.themeColor,
-    statusMessage: state => state.statusMessage
+    statusMessage: state => state.statusMessage,
+    locale: state => state.locale
 }
 
 /*

@@ -19,6 +19,7 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { mapGetters } from "vuex";
 export default {
+  data: () => ({}),
   components: {
     Navbar,
     Sidebar,
@@ -31,6 +32,7 @@ export default {
       "SET_THEME_COLOR",
       localStorage.getItem("theme-color") || "theme-light"
     );
+    this.$store.commit("SET_LOCALE", localStorage.getItem("lang") || "en");
   },
   methods: {
     changeTheme() {

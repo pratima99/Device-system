@@ -1,14 +1,14 @@
 <template>
   <div class="home-wrapper">
     <v-card width="400px" outlined v-if="!isDeviceSelected">
-      <div class="form-title">Add new device</div>
+      <div class="form-title">{{ $t("addDevice") }}</div>
       <v-form>
         <v-container>
           <v-row class="top-form-row">
             <v-col cols="12">
               <v-text-field
                 class="form-input-control"
-                label="Device Name"
+                :label="$t('deviceName')"
                 v-model="formData.name"
                 outlined
                 dense
@@ -17,7 +17,7 @@
             <v-col cols="12">
               <v-textarea
                 outlined
-                label="Device Description"
+                :label="$t('deviceDescription')"
                 v-model="formData.description"
                 dense
               ></v-textarea>
@@ -25,7 +25,7 @@
           </v-row>
           <v-row class="form-button-row">
             <v-btn depressed class="blue-btn" @click="saveLocally()">
-              Save
+              {{ $t("save") }}
             </v-btn>
           </v-row>
         </v-container>
@@ -38,7 +38,7 @@
         v-if="!isLocalDevices"
         @click="deleteDevice()"
       >
-        Delete
+        {{ $t("delete") }}
       </v-btn>
       <v-btn
         depressed
@@ -46,7 +46,7 @@
         v-if="isLocalDevices"
         @click="saveDevice()"
       >
-        Send
+        {{ $t("send") }}
       </v-btn>
     </v-row>
   </div>

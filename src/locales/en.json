@@ -1,0 +1,13 @@
+{
+  "message": "hello i18n !!",
+  "home": "Home",
+  "about": "About Us",
+  "light": "Light",
+  "dark": "Dark",
+  "send": "Send",
+  "delete": "Delete",
+  "save": "Save",
+  "addDevice": "Add new device",
+  "deviceName": "Device Name",
+  "deviceDescription": "Device Description"
+}
