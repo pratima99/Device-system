@@ -1,6 +1,6 @@
 <template>
   <div class="about-container">
-    <div class="about-wrapper">This is an about page</div>
+    <div class="about-wrapper">{{ $t("aboutContent") }}</div>
   </div>
 </template>
 

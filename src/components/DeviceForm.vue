@@ -1,8 +1,14 @@
 <template>
   <div class="home-wrapper">
-    <v-card width="400px" outlined v-if="!isDeviceSelected">
-      <div class="form-title">{{ $t("addDevice") }}</div>
-      <v-form>
+    <v-card
+      width="400px"
+      elevation="1"
+      outlined
+      v-if="!isDeviceSelected"
+      class="form-card-wrapper"
+    >
+      <div class="card-title">{{ $t("addDevice") }}</div>
+      <v-form ref="form" @submit.prevent="saveLocally">
         <v-container>
           <v-row class="top-form-row">
             <v-col cols="12">
@@ -10,6 +16,8 @@
                 class="form-input-control"
                 :label="$t('deviceName')"
                 v-model="formData.name"
+                :rules="nameRules"
+                required
                 outlined
                 dense
               ></v-text-field>
@@ -19,36 +27,50 @@
                 outlined
                 :label="$t('deviceDescription')"
                 v-model="formData.description"
+                :rules="descriptionRules"
+                required
                 dense
               ></v-textarea>
             </v-col>
           </v-row>
           <v-row class="form-button-row">
-            <v-btn depressed class="blue-btn" @click="saveLocally()">
+            <v-btn type="submit" depressed class="blue-btn">
               {{ $t("save") }}
             </v-btn>
           </v-row>
         </v-container>
       </v-form>
     </v-card>
-    <v-row class="action-button-row" v-if="isDeviceSelected">
-      <v-btn
-        depressed
-        class="red-btn"
-        v-if="!isLocalDevices"
-        @click="deleteDevice()"
-      >
-        {{ $t("delete") }}
-      </v-btn>
-      <v-btn
-        depressed
-        class="blue-btn"
-        v-if="isLocalDevices"
-        @click="saveDevice()"
-      >
-        {{ $t("send") }}
-      </v-btn>
-    </v-row>
+    <v-card
+      width="400px"
+      elevation="1"
+      outlined
+      class="form-card-wrapper"
+      v-if="isDeviceSelected"
+    >
+      <div class="action-card-title" v-if="!isLocalDevices">
+        {{ $t("deleteCardTitle") }}
+      </div>
+      <div class="action-card-title" v-else>{{ $t("sendCardTitle") }}</div>
+      <v-row class="action-button-row">
+        <v-btn
+          depressed
+          class="red-btn"
+          v-if="!isLocalDevices"
+          @click="deleteDevice()"
+        >
+          {{ $t("delete") }}
+        </v-btn>
+        <v-btn
+          depressed
+          class="blue-btn"
+          v-if="isLocalDevices"
+          @click="saveDevice()"
+        >
+          {{ $t("send") }}
+        </v-btn>
+      </v-row>
+    </v-card>
   </div>
 </template>
 
@@ -57,6 +79,8 @@ import { mapGetters } from "vuex";
 export default {
   data: () => ({
     formData: {},
+    nameRules: [(v) => !!v || "Device name is required"],
+    descriptionRules: [(v) => !!v || "Description is required"],
   }),
   computed: {
     ...mapGetters(["selectedDevice", "devices"]),
@@ -69,15 +93,19 @@ export default {
   },
   methods: {
     saveLocally() {
-      if (localStorage.getItem("data") == null) {
-        localStorage.setItem("data", "[]");
-      }
-      const old_data = JSON.parse(localStorage.getItem("data"));
-      old_data.push(this.formData);
+      if (this.$refs.form.validate()) {
+        if (localStorage.getItem("data") == null) {
+          localStorage.setItem("data", "[]");
+        }
+        const old_data = JSON.parse(localStorage.getItem("data"));
+        old_data.push(this.formData);
 
-      localStorage.setItem("data", JSON.stringify(old_data));
-      this.formData = {};
-      this.$store.commit("SET_LOCAL_DEVICES");
+        localStorage.setItem("data", JSON.stringify(old_data));
+        this.formData = {};
+        this.$store.commit("SET_LOCAL_DEVICES");
+        this.nameRules = [];
+        this.descriptionRules = [];
+      }
     },
     async deleteDevice() {
       const confirmation = confirm("Do you want to delete this device ?");
@@ -104,11 +132,18 @@ export default {
 </script>
 
 <style>
-.form-title {
+.card-title {
   font-size: 20px;
   font-weight: bold;
   color: var(--color-primary);
-  padding: 20px 0;
+  padding: 27px;
+  text-align: left;
+}
+.action-card-title {
+  font-size: 18px;
+  color: #444;
+  padding: 24px;
+  text-align: left;
 }
 .top-form-row {
   padding: 0 15px;
@@ -119,12 +154,9 @@ export default {
 .form-button-row {
   padding: 0 24px 24px 27px;
   margin-top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .action-button-row {
-  padding: 20px;
+  padding: 24px 34px;
 }
 .blue-btn {
   background-color: var(--color-primary) !important;

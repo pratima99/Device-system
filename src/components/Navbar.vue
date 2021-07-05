@@ -17,7 +17,6 @@
     <v-spacer></v-spacer>
 
     <div class="toggle-wrapper">
-      <div>{{ $t("light") }}</div>
       <v-switch
         hide-details
         class="mx-2"
@@ -26,8 +25,8 @@
       ></v-switch>
       <div>{{ $t("dark") }}</div>
     </div>
-    <div class="toggle-wrapper">
-      <div>English</div>
+    <div class="language-wrapper">
+      <img src="@/assets/united-states.png" class="language-icon" />
       <v-switch
         hide-details
         class="mx-2"
@@ -36,7 +35,7 @@
         false-value="en"
         @change="switchLocale"
       ></v-switch>
-      <div>Nepali</div>
+      <img src="@/assets/nepal.png" class="language-icon" />
     </div>
   </v-app-bar>
 </template>
@@ -77,7 +76,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-right: 20px;
+  padding-right: 24px;
+}
+.language-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.language-icon {
+  width: 20px;
 }
 .site-logo {
   display: flex;

@@ -75,6 +75,15 @@ export default {
   .v-card {
     background-color: var(--color-dark);
     color: #fff;
+    .card-title {
+      color: #fff;
+    }
+    .action-card-title {
+      color: #fff;
+    }
+    .v-input__slot {
+      background-color: #fff !important;
+    }
   }
   .v-navigation-drawer {
     background-color: var(--color-dark);
@@ -90,16 +99,15 @@ export default {
       color: var(--color-primary) !important;
     }
   }
-  .v-label,
-  .v-input textarea,
-  .v-input input {
-    color: #fff !important;
-  }
   .local-device {
     background-color: var(--color-primary);
   }
 }
-
+#app.theme-light {
+  .v-card {
+    background-color: #f5f5f5;
+  }
+}
 .main-body {
   display: flex;
   flex-direction: column;
