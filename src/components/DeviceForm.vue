@@ -59,7 +59,7 @@ export default {
     formData: {},
   }),
   computed: {
-    ...mapGetters(["selectedDevice"]),
+    ...mapGetters(["selectedDevice", "devices"]),
     isLocalDevices() {
       return this.selectedDevice?.type === "local";
     },
@@ -90,7 +90,7 @@ export default {
       const dataToSend = {
         devices: [
           {
-            id: 127,
+            id: this.devices[this.devices.length - 1].id + 1,
             name: this.selectedDevice.name,
             description: this.selectedDevice.description,
           },
